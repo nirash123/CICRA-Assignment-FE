@@ -1,1 +1,42 @@
-<p>signup works!</p>
+<div class="outer">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                      <img class="mt-5" src="assets/images/logo.png">
+                        <h2 class="pt-3 font-weight-bold"><b><i>Sign Up</i></b></h2>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form>
+                            <div class="form-group pt-3">
+                              <div class="input-field">
+                                <span class="fa fa-user p-2"></span>
+                                <input type="text" placeholder="User Name">
+                              </div>
+                            </div>
+                            <div class="form-group pt-3">
+                                <div class="input-field">
+                                  <span class="fa fa-user-circle-o p-2"></span>
+                                  <input type="text" placeholder="Full Name">
+                                </div>
+                              </div>
+                            <div class="form-group pt-3">
+                              <div class="input-field">
+                                <span class="fa fa-lock p-2"></span>
+                                <input [type]="type" placeholder="Password">
+                                <span (click)="hideShowPassword()" class="fa {{eyeIcon}}"></span>
+                              </div>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block mt-4 w-100 p-2">Sign Up</button>
+                            <div class="text-center pt-4 text-muted">
+                              Already have an account?
+                              <a id="signup-link" class="font-weight-bold" href="/login"> Login</a>
+                            </div>
+                          </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
