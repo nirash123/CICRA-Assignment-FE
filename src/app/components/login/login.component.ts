@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import ValidateForm from '../../helpers/validateform';
 
 @Component({
   selector: 'app-login',
@@ -35,20 +36,7 @@ export class LoginComponent {
     if(this.loginForm.valid){
 
     }else{
-      this.validateAllFormFields(this.loginForm)
+      ValidateForm.validateAllFormFields(this.loginForm)
     }
-  }
-
-  private validateAllFormFields(FormGroup:FormGroup){
-    Object.keys(FormGroup.controls).forEach(field=>{
-      const control = FormGroup.get(field);
-
-      if(control instanceof FormControl){
-        control.markAsDirty({ onlySelf:true })
-      } 
-      else{
-        this.validateAllFormFields(FormGroup)
-      }
-    })
   }
 }

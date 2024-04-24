@@ -8,32 +8,44 @@
                         <h2 class="pt-3 font-weight-bold"><b><i>Sign Up</i></b></h2>
                     </div>
                     <div class="panel-body p-3">
-                        <form>
-                            <div class="form-group pt-3">
-                              <div class="input-field">
-                                <span class="fa fa-user p-2"></span>
-                                <input type="text" placeholder="User Name">
-                              </div>
-                            </div>
-                            <div class="form-group pt-3">
-                                <div class="input-field">
-                                  <span class="fa fa-user-circle-o p-2"></span>
-                                  <input type="text" placeholder="Full Name">
-                                </div>
-                              </div>
-                            <div class="form-group pt-3">
-                              <div class="input-field">
-                                <span class="fa fa-lock p-2"></span>
-                                <input [type]="type" placeholder="Password">
-                                <span (click)="hideShowPassword()" class="fa {{eyeIcon}}"></span>
-                              </div>
-                            </div>
-                            <button type="submit" class="btn btn-success btn-block mt-4 w-100 p-2">Sign Up</button>
-                            <div class="text-center pt-4 text-muted">
-                              Already have an account?
-                              <a id="signup-link" class="font-weight-bold" href="/login"> Login</a>
-                            </div>
-                          </form>
+                      <form [formGroup]="signupForm">
+                        <div class="form-group pt-3">
+                          <div class="input-field" [class.error]="signupForm.controls['username'].invalid && (signupForm.controls['username'].touched || signupForm.controls['username'].dirty)">
+                            <span class="fa fa-user p-2"></span>
+                            <input formControlName="username" type="text" placeholder="Username">
+                          </div>
+                          <small class="text-danger" *ngIf="signupForm.controls['username'].invalid && (signupForm.controls['username'].touched || signupForm.controls['username'].dirty)"> 
+                            <span *ngIf="signupForm.controls['username'].errors?.['required']">* Username is required.  </span>
+                            <span *ngIf="signupForm.controls['username'].errors?.['minlength']">* Minimum 4 charactors required.  </span>
+                            <span *ngIf="signupForm.controls['username'].errors?.['maxlength']">* Maximum 10 charactors required.  </span>
+                          </small>
+                        </div>
+                        <div class="form-group pt-3">
+                          <div class="input-field" [class.error]="signupForm.controls['fullname'].invalid && (signupForm.controls['fullname'].touched || signupForm.controls['fullname'].dirty)">
+                            <span class="fa fa-user-circle-o p-2"></span>
+                            <input formControlName="fullname" type="text" placeholder="Full Name">
+                          </div>
+                          <small class="text-danger" *ngIf="signupForm.controls['fullname'].invalid && (signupForm.controls['fullname'].touched || signupForm.controls['fullname'].dirty)"> 
+                            <span *ngIf="signupForm.controls['fullname'].errors?.['required']">* Fullname is required.  </span>
+                            <span *ngIf="signupForm.controls['fullname'].errors?.['minlength']">* Minimum 4 charactors required.  </span>
+                          </small>
+                        </div>
+                        <div class="form-group pt-3">
+                          <div class="input-field" [class.error]="signupForm.controls['password'].invalid && (signupForm.controls['password'].touched || signupForm.controls['password'].dirty)">
+                            <span class="fa fa-lock p-2"></span>
+                            <input formControlName="password" [type]="type" placeholder="Password">
+                            <span (click)="hideShowPassword()" class="fa {{eyeIcon}}"></span>
+                          </div>
+                        </div>
+                        <small class="text-danger" *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].touched || signupForm.controls['password'].dirty)"> 
+                          <span *ngIf="signupForm.controls['password'].errors?.['required']">* Password is required.  </span>
+                        </small>
+                        <button (click)="onSubmit()" type="submit" class="btn btn-success btn-block mt-4 w-100 p-2">Sign Up</button>
+                        <div class="text-center pt-4 text-muted">
+                          Already have an account?
+                          <a id="signup-link" class="font-weight-bold" href="/login"> Login</a>
+                        </div>
+                      </form>
                     </div>
                 </div>
             </div>
