@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component} from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import ValidateForm from '../../helpers/validateform';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,10 +19,10 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor() {
-    this.loginForm = new FormGroup({
-      username: new FormControl("", [Validators.required, Validators.minLength(4), Validators.maxLength(10)]),
-      password: new FormControl("", [Validators.required]),
+  constructor(private fb: FormBuilder, private auth: AuthService) {
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
+      password: ['', Validators.required]
   })
 }
 
@@ -32,8 +33,18 @@ export class LoginComponent {
     this.type = this.isText ? "text" : "password";
   }
 
-  onSubmit() {
+  onLogin() {
     if(this.loginForm.valid){
+
+      this.auth.login(this.loginForm.value)
+      .subscribe({
+        next:(res=> {
+          alert(res.message)
+        }),
+        error:(err=>{
+          alert(err?.error.message)
+        })
+      })
 
     }else{
       ValidateForm.validateAllFormFields(this.loginForm)

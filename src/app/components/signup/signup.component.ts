@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import ValidateForm from '../../helpers/validateform';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -18,11 +19,13 @@ export class SignupComponent {
 
   signupForm: FormGroup;
 
-  constructor() {
-    this.signupForm = new FormGroup({
-      username: new FormControl("", [Validators.required, Validators.minLength(4), Validators.maxLength(10)]),
-      fullname: new FormControl("", [Validators.required, Validators.minLength(4)]),
-      password: new FormControl("", [Validators.required]),
+  constructor(private fb: FormBuilder, private auth: AuthService) {
+    this.signupForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
+      fullname: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', Validators.required],
+      token: [""],
+      role: [""],
   })
 }
 
@@ -33,11 +36,19 @@ export class SignupComponent {
     this.type = this.isText ? "text" : "password";
   }
 
-  onSubmit() {
-    if(this.signupForm.valid){
-
-    }else{
-      ValidateForm.validateAllFormFields(this.signupForm)
+  onSignUp() {
+    if (this.signupForm.valid) {
+      this.auth.signUp(this.signupForm.value)
+        .subscribe({
+          next: (res => {
+            alert(res.message);
+        }),
+          error: (err => {
+            alert(err?.erroor.message); 
+        })
+        });
+    } else {
+      ValidateForm.validateAllFormFields(this.signupForm);
     }
   }
 

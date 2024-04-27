@@ -40,7 +40,7 @@
                         <small class="text-danger" *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].touched || signupForm.controls['password'].dirty)"> 
                           <span *ngIf="signupForm.controls['password'].errors?.['required']">* Password is required.  </span>
                         </small>
-                        <button (click)="onSubmit()" type="submit" class="btn btn-success btn-block mt-4 w-100 p-2">Sign Up</button>
+                        <button (click)="onSignUp()" type="submit" class="btn btn-success btn-block mt-4 w-100 p-2">Sign Up</button>
                         <div class="text-center pt-4 text-muted">
                           Already have an account?
                           <a id="signup-link" class="font-weight-bold" href="/login"> Login</a>
