@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import ValidateForm from '../../helpers/validateform';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router'; 
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -20,7 +21,7 @@ export class SignupComponent {
 
   signupForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private toast: ToastrService) {
     this.signupForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
       fullname: ['', [Validators.required, Validators.minLength(4)]],
@@ -42,12 +43,12 @@ export class SignupComponent {
       this.auth.signUp(this.signupForm.value)
         .subscribe({
           next: (res => {
-            alert(res.message);
+            this.toast.success(res.message,'SUCCESS');
             this.signupForm.reset();
             this.router.navigate(['login']);
         }),
           error: (err => {
-            alert(err?.error.message); 
+            this.toast.error(err.error.message,'ERROR');
         })
         });
     } else {

@@ -43,11 +43,11 @@ export class LoginComponent {
         next:(res=> {
           this.toast.success(res.message,'SUCCESS');
           this.loginForm.reset();
+          this.auth.storeToken(res.token);
           this.router.navigate(['dashboard']);
         }),
         error:(err=>{
           this.toast.error(err.error.message,'ERROR');
-          console.log(err)
         })
       })
 
