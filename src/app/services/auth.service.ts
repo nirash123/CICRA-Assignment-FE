@@ -62,9 +62,4 @@ export class AuthService {
     if(this.userPayload)
       return this.userPayload.name
   }
-
-  getRoleFromToken() {
-    if(this.userPayload)
-      return this.userPayload.role
-  }
 }

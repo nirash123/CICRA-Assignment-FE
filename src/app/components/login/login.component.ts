@@ -42,12 +42,12 @@ export class LoginComponent {
       this.auth.login(this.loginForm.value)
       .subscribe({
         next:(res=> {
-          this.toast.success(res.message,'SUCCESS');
+          this.toast.success('Welcome ' + res.username,'SUCCESS');
           this.loginForm.reset();
           this.auth.storeToken(res.token);
+          
           let tokenPayload = this.auth.decodeToken();
           this.userStore.setFullNameFromStore(tokenPayload.name);
-          this.userStore.setRoleFromStore(tokenPayload.role);
           this.router.navigate(['dashboard']);
         }),
         error:(err=>{

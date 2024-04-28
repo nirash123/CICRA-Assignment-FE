@@ -27,7 +27,6 @@ export class SignupComponent {
       fullname: ['', [Validators.required, Validators.minLength(4)]],
       password: ['', Validators.required],
       token: [""],
-      role: [""],
   })
 }
 

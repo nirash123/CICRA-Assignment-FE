@@ -13,16 +13,15 @@ import { UserStoreService } from '../../services/user-store.service';
 })
 export class DashboardComponent {
 
-  public users:any = [];
+  public employees:any = [];
 
   public fullName : string = "";
-  public role : string = "";
   constructor(private api: ApiService, private auth: AuthService, private userStore: UserStoreService) {}
 
   ngOnInit() {
-    this.api.getUsers()
+    this.api.getEmployees()
     .subscribe(res => {
-      this.users = res;
+      this.employees = res;
     });
 
     this.userStore.getFullNameFromStore()
@@ -30,12 +29,6 @@ export class DashboardComponent {
       let fullNameFormToken = this.auth.getfullNameFromToken();
       this.fullName = val || fullNameFormToken
     });
-
-    this.userStore.getRoleFromStore()
-    .subscribe(val=> {
-      let roleFormToken = this.auth.getRoleFromToken();
-      this.role = val || roleFormToken
-    })
   }
 
   logout() {

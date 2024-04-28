@@ -16,7 +16,6 @@
 
 <div class="container-fluid">
   <div class="row">
-     <!--  <ng-container *ngIf="role === 'Admin'"> -->
       <main class="col-md-2 ms-sm-auto col-lg-2 px-md-2">
         </main>
 
@@ -39,15 +38,19 @@
                   <thead>
                       <tr>
                           <th scope="col">#</th>
-                          <th scope="col">Full Name</th>
-                          <th scope="col">Username</th>
+                          <th scope="col">First Name</th>
+                          <th scope="col">Last Name</th>
+                          <th scope="col">Mobile Number</th>
+                          <th scope="col">Email</th>
                       </tr>
                   </thead>
                   <tbody>
-                      <tr *ngFor="let user of users; let i= index">
+                      <tr *ngFor="let employee of employees; let i= index">
                           <td>{{i+1}}</td>
-                          <td>{{user.fullname}}</td>
-                          <td>{{user.username}}</td>
+                          <td>{{employee.firstname}}</td>
+                          <td>{{employee.lastname}}</td>
+                          <td>{{employee.phonenumber}}</td>
+                          <td>{{employee.email}}</td>
                       </tr>
 
                   </tbody>
