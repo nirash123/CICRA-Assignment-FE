@@ -5,6 +5,7 @@ import ValidateForm from '../../helpers/validateform';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router'; 
 import { ToastrService } from 'ngx-toastr';
+import { UserStoreService } from '../../services/user-store.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private toast: ToastrService) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private toast: ToastrService, private userStore: UserStoreService) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
       password: ['', Validators.required]
@@ -44,6 +45,9 @@ export class LoginComponent {
           this.toast.success(res.message,'SUCCESS');
           this.loginForm.reset();
           this.auth.storeToken(res.token);
+          let tokenPayload = this.auth.decodeToken();
+          this.userStore.setFullNameFromStore(tokenPayload.name);
+          this.userStore.setRoleFromStore(tokenPayload.role);
           this.router.navigate(['dashboard']);
         }),
         error:(err=>{
