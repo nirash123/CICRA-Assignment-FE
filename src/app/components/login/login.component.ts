@@ -3,6 +3,8 @@ import { Component} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import ValidateForm from '../../helpers/validateform';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router'; 
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private toast: ToastrService) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
       password: ['', Validators.required]
@@ -39,10 +41,13 @@ export class LoginComponent {
       this.auth.login(this.loginForm.value)
       .subscribe({
         next:(res=> {
-          alert(res.message)
+          this.toast.success(res.message,'SUCCESS');
+          this.loginForm.reset();
+          this.router.navigate(['dashboard']);
         }),
         error:(err=>{
-          alert(err?.error.message)
+          this.toast.error(err.error.message,'ERROR');
+          console.log(err)
         })
       })
 

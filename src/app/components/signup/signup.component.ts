@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import ValidateForm from '../../helpers/validateform';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,7 @@ export class SignupComponent {
 
   signupForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.signupForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
       fullname: ['', [Validators.required, Validators.minLength(4)]],
@@ -42,9 +43,11 @@ export class SignupComponent {
         .subscribe({
           next: (res => {
             alert(res.message);
+            this.signupForm.reset();
+            this.router.navigate(['login']);
         }),
           error: (err => {
-            alert(err?.erroor.message); 
+            alert(err?.error.message); 
         })
         });
     } else {
